@@ -17,7 +17,7 @@ class Router
             }
         }
         if ($currentUri === "$root/") {
-            require_once "./Pages/index.php";
+            require_once "./Pages/home.php";
             $return_404 = false;
         }
         if ($checkdir) {
