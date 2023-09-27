@@ -1,3 +1,6 @@
 <?php
 require_once "./Cannel/Load.php";
-index();
+// Page::RemoveHeader("pagename");
+// Page::RemoveHeader("product");
+// Page::RemoveFooter("about");
+Page::Index();
