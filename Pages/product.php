@@ -1,3 +1,1 @@
-<?php
-// Page::RemoveHeader();
-?><h1>products</h1>
+<h1>products</h1>

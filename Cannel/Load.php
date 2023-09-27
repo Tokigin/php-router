@@ -3,7 +3,6 @@ require_once "./Cannel/Layout.php";
 require_once "./Cannel/Router.php";
 class Page
 {
-
     public static function Index()
     {
         Layout::Headerlayout(Layout::$Header);
