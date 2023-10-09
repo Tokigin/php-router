@@ -5,6 +5,7 @@ class Page
 {
     public static function Index()
     {
+        require_once "./Cannel/Setting.php";
         Layout::Headerlayout(Layout::$Header);
         Router::Handle();
         Layout::Footerlayout(Layout::$Footer);
