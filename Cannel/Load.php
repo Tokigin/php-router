@@ -6,6 +6,7 @@ class Page
     public static $LoadDB = false;
     public static $Boostrap = true;
 
+
     public static function Index()
     {
         require_once "./Cannel/Setting.php";
