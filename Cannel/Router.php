@@ -2,7 +2,7 @@
 
 class Router
 {
-    public static $Root = "/php-router";
+    public static $Root = "/php-router"; // project name (remove if deploy to server eg."/")
     public static $Dir_page = "Pages";
     public static $Extention = ".php";
     public static $Checkdir = false;
