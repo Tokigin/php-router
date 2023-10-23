@@ -4,11 +4,13 @@ require_once "./Cannel/Router.php";
 class Page
 {
     public static $LoadDB = false;
+    public static $Boostrap = true;
 
     public static function Index()
     {
         require_once "./Cannel/Setting.php";
         self::LoadDB(self::$LoadDB);
+        self::LoadBoostrap(self::$Boostrap);
         Layout::Headerlayout(Layout::$Header);
         Router::Handle();
         Layout::Footerlayout(Layout::$Footer);
@@ -31,6 +33,12 @@ class Page
     {
         if ($loaddb) {
             require "Connection.php";
+        }
+    }
+    public static function LoadBoostrap($boostrap)
+    {
+        if ($boostrap) {
+            require "script/Boostrap.php";
         }
     }
 }
