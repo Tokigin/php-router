@@ -6,7 +6,6 @@ class Page
     public static $LoadDB = false;
     public static $Boostrap = true;
 
-
     public static function Index()
     {
         require_once "./Cannel/Setting.php";
@@ -34,6 +33,8 @@ class Page
     {
         if ($loaddb) {
             require "Connection.php";
+            Connection::CreateDB();
+            Connection::CreateUserTable();
         }
     }
     public static function LoadBoostrap($boostrap)
