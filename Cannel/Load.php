@@ -5,10 +5,11 @@ class Page
 {
     public static $LoadDB = false;
     public static $Boostrap = true;
+    public static $Setting = true;
 
     public static function Index()
     {
-        require_once "./Cannel/Setting.php";
+        self::LoadSetting(self::$Setting);
         self::LoadDB(self::$LoadDB);
         self::LoadBoostrap(self::$Boostrap);
         Layout::Headerlayout(Layout::$Header);
@@ -41,6 +42,12 @@ class Page
     {
         if ($boostrap) {
             require "script/Boostrap.php";
+        }
+    }
+    public static function LoadSetting($setting)
+    {
+        if ($setting) {
+            require_once "./Cannel/Setting.php";
         }
     }
 }
