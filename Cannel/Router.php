@@ -1,20 +1,18 @@
 <?php
-
 class Router
 {
-    public static $Root = "/php-router";
+    public static $Root = "/php-router"; // project name (remove if deploy to server eg."/")
     public static $Dir_page = "Pages";
     public static $Extention = ".php";
     public static $Checkdir = false;
     public static $Return_404 = true;
-
     public static function Handle()
     {
         $root = self::$Root;
         $dir_page = self::$Dir_page;
         $ext = self::$Extention;
         $currentUri = $_SERVER["REQUEST_URI"];
-        Self::CurrentUri($dir_page, $currentUri, $ext, $root);
+        self::CurrentUri($dir_page, $currentUri, $ext, $root);
         $checkdir = self::$Checkdir;
         $return_404 = self::$Return_404;
         if ($currentUri === "$root/") {
