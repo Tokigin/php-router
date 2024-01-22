@@ -15,6 +15,7 @@ class Router
         self::CurrentUri($dir_page, $currentUri, $ext, $root);
         $checkdir = self::$Checkdir;
         $return_404 = self::$Return_404;
+
         if ($currentUri === "$root/") {
             require_once "./$dir_page/home$ext";
             $return_404 = false;
