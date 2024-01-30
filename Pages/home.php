@@ -1,1 +1,2 @@
-<h1>this is home new</h1>
+<?php
+include "./Components/herobanner.php";
