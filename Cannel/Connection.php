@@ -1,3 +1,4 @@
+<!-- delete this page if there is no need to connect to database -->
 <?php
 
 class Connection

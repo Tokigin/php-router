@@ -1,7 +1,7 @@
 <?php
 class Router
 {
-    public static $Root = "/php-router"; // project name (remove if deploy to server eg."/")
+    public static $Root = "/"; // project name (remove if deploy to server eg."/")
     public static $Dir_page = "Pages";
     public static $Extention = ".php";
     public static $Checkdir = false;
@@ -30,7 +30,7 @@ class Router
     }
     public static function CurrentUri($dir_page, $currentUri, $ext, $root)
     {
-        foreach (glob($dir_page . '/*.php') as $file) {
+        foreach (glob($dir_page . "/*$ext") as $file) {
             $page = str_replace("$dir_page/", "", $file);
             if ("$currentUri$ext" == "$root/$page") {
                 self::$Checkdir = true;

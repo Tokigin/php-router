@@ -1,5 +1,6 @@
 <?php
 // Page::RemoveHeader("pagename");
-// Page::RemoveHeader("hh");
-// Page::RemoveFooter("about");
-// Page::LoadDB(true);
+// Page::RemoveFooter("pagename");
+//  Page::LoadDB(true);
+// Router::$Extention = ".html";
+Router::$Root = "/php-router"; // project name (remove if deploy to server eg."/")
