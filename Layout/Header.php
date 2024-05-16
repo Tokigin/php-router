@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand text-white fs-1" href="<?php echo Router::$Root ?>">Cannel Framework</a>
+        <a class="navbar-brand text-white fs-1" href="<?php echo Router::$Root ?>">Cannel </a>
         <button class="navbar-toggler  border border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon "></span>
         </button>
