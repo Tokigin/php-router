@@ -10,7 +10,7 @@ class Page
     public static function Index()
     {
         self::LoadSetting(self::$Setting);
-        self::LoadDB(self::$LoadDB);
+        DB::LoadDB(self::$LoadDB);
         self::LoadBoostrap(self::$Boostrap);
         Layout::Headerlayout(Layout::$Header);
         Router::Handle();
@@ -30,14 +30,7 @@ class Page
             Layout::$Footer = false;
         }
     }
-    public static function LoadDB($loaddb)
-    {
-        if ($loaddb) {
-            require "Connection.php";
-            Connection::CreateDB();
-            Connection::CreateUserTable();
-        }
-    }
+
     public static function LoadBoostrap($boostrap)
     {
         if ($boostrap) {
@@ -48,6 +41,18 @@ class Page
     {
         if ($setting) {
             require_once "./Cannel/Setting.php";
+        }
+    }
+}
+
+class DB
+{
+    public static function LoadDB($loaddb)
+    {
+        if ($loaddb) {
+            require "Connection.php";
+            Connection::CreateDB();
+            Connection::CreateUserTable();
         }
     }
 }

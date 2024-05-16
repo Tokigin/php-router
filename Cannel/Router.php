@@ -27,6 +27,10 @@ class Router
         if ($return_404) {
             require_once "./Layout/404$ext";
         }
+        /////
+
+        /////
+
     }
     public static function CurrentUri($dir_page, $currentUri, $ext, $root)
     {
@@ -47,6 +51,16 @@ class Router
             return true;
         } else {
             return false;
+        }
+    }
+    public static function Rout($route, $path_to_include)
+    {
+        self::$Checkdir = false;
+        self::$Return_404 = false;
+        $root = self::$Root;
+        switch ($_SERVER['REQUEST_URI']) {
+            case "$root/items/p1":
+                require "Pages/items/p1.php";
         }
     }
 }
