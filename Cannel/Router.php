@@ -64,11 +64,5 @@ class Router
         if ($return_404) {
             require_once "./Layout/404$ext";
         }
-
-        // switch ($_SERVER['REQUEST_URI']) {
-
-        //     case "$root/$route":
-        //         require "Pages/items/p1.php";
-        // }
     }
 }
