@@ -51,18 +51,22 @@ class Router
     }
     public static function ManualRoute()
     {
-        require_once "manualrouter.php";
-        $root = self::$Root;
-        $ext = self::$Extention;
-        $return_404 = self::$Return_404;
-        foreach (ManualRoute::$Route as $request => $file) {
-            if ($_SERVER['REQUEST_URI'] == "$root/$request") {
-                $return_404 = false;
-                require "$file";
+        if (file_exists("./Manualrouter.php")) {
+            require_once "Manualrouter.php";
+            $root = self::$Root;
+            $ext = self::$Extention;
+            $return_404 = self::$Return_404;
+            foreach (ManualRoute::$Route as $request => $file) {
+                if ($_SERVER['REQUEST_URI'] == "$root/$request") {
+                    $return_404 = false;
+                    require "$file";
+                }
             }
-        }
-        if ($return_404) {
-            require_once "./Layout/404$ext";
+            if ($return_404) {
+                require_once "./Layout/404$ext";
+            }
+        } else {
+            ErrorMessage::Show('There is no "Manualrouter.php" in root folder. ');
         }
     }
 }

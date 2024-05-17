@@ -35,13 +35,23 @@ class Page
     public static function LoadBoostrap($boostrap)
     {
         if ($boostrap) {
-            require "script/Boostrap.php";
+            if (file_exists("./Cannel/script/Bootstrap.php")) {
+                require "script/Bootstrap.php";
+            } else {
+                ErrorMessage::Show('There is no Bootstrap.php in ./Cannel/script.');
+                die();
+            }
         }
     }
     public static function LoadSetting($setting)
     {
         if ($setting) {
-            require_once "./Setting.php";
+            if (file_exists("./Setting.php")) {
+                require_once "./Setting.php";
+            } else {
+                ErrorMessage::Show('There is no "Setting.php" in root folder.');
+                die();
+            }
         }
     }
 
@@ -63,9 +73,21 @@ class DB
     public static function LoadDB($loaddb)
     {
         if ($loaddb) {
-            require "Connection.php";
-            Connection::CreateDB();
-            Connection::CreateUserTable();
+            if (file_exists("./Cannel/Connectiondd.php")) {
+                require "Connection.php";
+                Connection::CreateDB();
+                Connection::CreateUserTable();
+            } else {
+                ErrorMessage::Show('There is no Connection.php in ./Cannel.');
+                die();
+            }
         }
+    }
+}
+class ErrorMessage
+{
+    public static function Show($error)
+    {
+        echo "<h5>$error</h5>";
     }
 }
