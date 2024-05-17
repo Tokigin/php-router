@@ -27,10 +27,6 @@ class Router
         if ($return_404) {
             require_once "./Layout/404$ext";
         }
-        /////
-
-        /////
-
     }
     public static function CurrentUri($dir_page, $currentUri, $ext, $root)
     {
@@ -53,14 +49,26 @@ class Router
             return false;
         }
     }
-    public static function Rout($route, $path_to_include)
+    public static function ManualRoute()
     {
-        self::$Checkdir = false;
-        self::$Return_404 = false;
+        require_once "manualrouter.php";
         $root = self::$Root;
-        switch ($_SERVER['REQUEST_URI']) {
-            case "$root/items/p1":
-                require "Pages/items/p1.php";
+        $ext = self::$Extention;
+        $return_404 = self::$Return_404;
+        foreach (ManualRoute::$Route as $request => $file) {
+            if ($_SERVER['REQUEST_URI'] == "$root/$request") {
+                $return_404 = false;
+                require "$file";
+            }
         }
+        if ($return_404) {
+            require_once "./Layout/404$ext";
+        }
+
+        // switch ($_SERVER['REQUEST_URI']) {
+
+        //     case "$root/$route":
+        //         require "Pages/items/p1.php";
+        // }
     }
 }

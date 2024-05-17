@@ -6,6 +6,7 @@ class Page
     public static $LoadDB = false;
     public static $Boostrap = true;
     public static $Setting = true;
+    public static $AutoRouter = false;
 
     public static function Index()
     {
@@ -13,7 +14,14 @@ class Page
         DB::LoadDB(self::$LoadDB);
         self::LoadBoostrap(self::$Boostrap);
         Layout::Headerlayout(Layout::$Header);
-        Router::Handle();
+        switch (self::$AutoRouter) {
+            case true:
+                Router::Handle();
+                break;
+            case false:
+                Router::ManualRoute();
+                break;
+        }
         Layout::Footerlayout(Layout::$Footer);
     }
     public static function RemoveHeader($filename)
