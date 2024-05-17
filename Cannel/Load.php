@@ -6,7 +6,7 @@ class Page
     public static $LoadDB = false;
     public static $Boostrap = true;
     public static $Setting = true;
-    public static $AutoRouter = false;
+    public static $AutoRouter = true;
 
     public static function Index()
     {
@@ -14,14 +14,7 @@ class Page
         DB::LoadDB(self::$LoadDB);
         self::LoadBoostrap(self::$Boostrap);
         Layout::Headerlayout(Layout::$Header);
-        switch (self::$AutoRouter) {
-            case true:
-                Router::Handle();
-                break;
-            case false:
-                Router::ManualRoute();
-                break;
-        }
+        self::AutoRouter(self::$AutoRouter);
         Layout::Footerlayout(Layout::$Footer);
     }
     public static function RemoveHeader($filename)
@@ -48,7 +41,19 @@ class Page
     public static function LoadSetting($setting)
     {
         if ($setting) {
-            require_once "./Cannel/Setting.php";
+            require_once "./Setting.php";
+        }
+    }
+
+    public static function AutoRouter($autorouter)
+    {
+        switch ($autorouter) {
+            case true:
+                Router::Handle();
+                break;
+            case false:
+                Router::ManualRoute();
+                break;
         }
     }
 }

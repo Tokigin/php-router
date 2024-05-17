@@ -1,11 +1,11 @@
 <!-- this file can be deleted if using Auto Router  -->
-<!-- "Request URl" => "File path" -->
+<!-- "Request URl" => "File Path" -->
 <?php
 class ManualRoute
 {
     public static $Route = array(
-        "items/p1" => "Pages/items/p1.php",
-        "items/p2" => "Pages/items/p2.php",
-        "items/p3" => "Pages/items/p3.php",
+        "sub/p1" => "Pages/Sub/p1.php",
+        "sub/p2" => "Pages/Sub/p2.php",
+        "sub/p3" => "Pages/Sub/p3.php",
     );
 }
