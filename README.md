@@ -33,6 +33,62 @@ There's nothing special about `Components/`, it is just for sake of clear projec
 
 `Setting.php` is for configuring the `Cannel` source code.
 
+### Remove header on all pages
+
+```text
+Layout::$Header = false;
+```
+
+### Remove footer on all pages
+
+```text
+Layout::$Footer = false;
+```
+
+### Remove Header in Specific page
+
+```text
+Page::RemoveHeader("page-name");
+```
+
+### Remove Footer in Specific page
+
+```text
+Page::RemoveHeader("page-name");
+```
+
+### Load mysql database
+
+```text
+DB::LoadDB(true);
+```
+
+### Switch to html mode
+
+```text
+Router::$Extention = ".html";
+```
+
+### Disable Auto Router
+
+```text
+Page::$AutoRouter = false;
+```
+
+### Project name (remove if deploy to server )
+
+```text
+Router::$Root = "/project-name";
+```
+
+### Page::LoadBootstrap(false);
+
+```text
+Page::LoadBootstrap(false);
+```
+
+### Default Values
+
 | Code                               | Action                                     | Default |
 | :--------------------------------- | :----------------------------------------- | :------ |
 | `Layout::$Header = false;`         | Remove header on all pages                 | True    |
