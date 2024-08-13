@@ -7,7 +7,5 @@ class ManualRoute
         "" => "Pages/home.php",
         "about" => "Pages/about.php",
         "item/p1" => "Pages/Sub/p1.php",
-        "item/p2" => "Pages/Sub/p2.php",
-        "item/p3" => "Pages/Sub/p3.php",
     );
 }
