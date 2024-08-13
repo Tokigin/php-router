@@ -5,8 +5,8 @@
                 <h1 class="display-3 fw-bold mb-3">Cannel Framework</h1>
                 <p class="lead mb-5">Developed by Ko Htet from Z.com Myanmar. This framework is made for simple information website development . </p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" class="btn b  sb-btn-3xl btn-light gap-3">Framework Guide</button>
-                    <button type="button" class="btn bsb-btn-3xl btn-outline-light">Learn more</button>
+                    <a href="https://github.com/Tokigin/php-router?tab=readme-ov-file#php-router-cannel" class="btn sb-btn-3xl btn-light gap-3">Framework Guide</a>
+                    <a href="#" class="btn bsb-btn-3xl btn-outline-light">Learn more</a>
                 </div>
             </div>
         </div>

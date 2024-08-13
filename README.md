@@ -90,6 +90,8 @@ Router::$Root = "/project-name";
 Page::LoadBootstrap(false);
 ```
 
+### Default Values
+
 | Code                               | Action                                     | Default |
 | :--------------------------------- | :----------------------------------------- | :------ |
 | `Layout::$Header = false;`         | Remove header on all pages                 | True    |
