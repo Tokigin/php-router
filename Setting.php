@@ -6,5 +6,7 @@
 // Page::RemoveFooter("pagename"); // Remove Footer in Specific page
 // DB::LoadDB(true); // Load mysql database
 // Router::$Extention = ".html"; // Switch to html mode
+// Page::LoadBootstrap(false); // Remove Bootstrap
+
 Page::$AutoRouter = false; // Disable Auto Router
-Router::$Root = "/php-router"; // project name (remove if deploy to server eg."/")
+Router::$Root = "/php-router"; // Project name (remove if deploy to server eg."/")

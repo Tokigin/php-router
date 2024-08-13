@@ -4,7 +4,7 @@ require_once "./Cannel/Router.php";
 class Page
 {
     public static bool $LoadDB = false;
-    public static bool $Boostrap = true;
+    public static bool $Bootstrap = true;
     public static bool $Setting = true;
     public static bool $AutoRouter = true;
 
@@ -12,7 +12,7 @@ class Page
     {
         self::LoadSetting(self::$Setting);
         DB::LoadDB(self::$LoadDB);
-        self::LoadBoostrap(self::$Boostrap);
+        self::LoadBootstrap(self::$Bootstrap);
         Layout::Headerlayout(Layout::$Header);
         self::AutoRouter(self::$AutoRouter);
         Layout::Footerlayout(Layout::$Footer);
@@ -30,9 +30,10 @@ class Page
         }
     }
 
-    public static function LoadBoostrap(bool $boostrap): void
+    public static function LoadBootstrap(bool $boostrap): void
     {
-        if ($boostrap) {
+        self::$Bootstrap = $boostrap;
+        if (self::$Bootstrap) {
             if (file_exists("./Cannel/script/Bootstrap.php")) {
                 require "script/Bootstrap.php";
             } else {
