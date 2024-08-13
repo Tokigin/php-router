@@ -2,7 +2,7 @@
 
 Easy to use php router with auto and manual routing.
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 /
