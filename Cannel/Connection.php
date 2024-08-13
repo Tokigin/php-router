@@ -3,12 +3,12 @@
 
 class Connection
 {
-    private static $Server = "localhost";
-    private static $User = "root";
-    private static $Password = "";
-    private static $DBName = "cms";
+    private static string $Server = "localhost";
+    private static string $User = "root";
+    private static string $Password = "";
+    private static string $DBName = "cms";
 
-    public static function CreateDB()
+    public static function CreateDB(): void
     {
         // stable
         try {
@@ -25,7 +25,7 @@ class Connection
             }
         }
     }
-    public static function CreateUserTable()
+    public static function CreateUserTable(): void
     {
         // stable 
         try {
@@ -43,7 +43,7 @@ class Connection
             }
         }
     }
-    public static function DBQuarry($insert_data)
+    public static function DBQuarry(string $insert_data): void
     {
         // stable 
         include("script/dbc.php");
@@ -52,7 +52,7 @@ class Connection
         $conn->query($sql);
         $conn->close();
     }
-    public static function DBSelect($select_data)
+    public static function DBSelect(string $select_data): bool
     {
         // stable 
         include("script/dbc.php");
@@ -62,27 +62,27 @@ class Connection
         $conn->close();
         return $result;
     }
-    public static function CreateTableSql($tablename, $column)
+    public static function CreateTableSql(string $tablename, string $column): string
     {
         return "CREATE TABLE $tablename ( $column );";
     }
-    public static function SelectSql($tablename, $selectdata)
+    public static function SelectSql(string $tablename, string $selectdata): string
     {
         return "SELECT * FROM $tablename WHERE $selectdata; ";
     }
-    public static function SelectAllSql($tablename)
+    public static function SelectAllSql(string $tablename): string
     {
         return "SELECT * FROM $tablename;";
     }
-    public static function DeleteSql($tablename, $deletedata)
+    public static function DeleteSql(string $tablename, string $deletedata): string
     {
         return "DELETE FROM $tablename WHERE $deletedata;";
     }
-    public static function UpdateSql($tablename, $updatecolumn, $updatedata)
+    public static function UpdateSql(string $tablename, string $updatecolumn, string $updatedata): string
     {
         return "UPDATE $tablename SET $updatecolumn where $updatedata";
     }
-    public static function InsertSql($tablename, $insertdata)
+    public static function InsertSql(string $tablename, string $insertdata): string
     {
         return "INSERT INTO $tablename VALUES ( $insertdata )";
     }

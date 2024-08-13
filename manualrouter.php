@@ -5,8 +5,9 @@ class ManualRoute
 {
     public static $Route = array(
         "" => "Pages/home.php",
-        "sub/p1" => "Pages/Sub/p1.php",
-        "sub/p2" => "Pages/Sub/p2.php",
-        "sub/p3" => "Pages/Sub/p3.php",
+        "about" => "Pages/about.php",
+        "item/p1" => "Pages/Sub/p1.php",
+        "item/p2" => "Pages/Sub/p2.php",
+        "item/p3" => "Pages/Sub/p3.php",
     );
 }

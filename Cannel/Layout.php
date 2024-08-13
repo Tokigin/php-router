@@ -1,9 +1,9 @@
 <?php
 class Layout
 {
-    public static $Header = true;
-    public static $Footer = true;
-    public static function Headerlayout($header)
+    public static bool $Header = true;
+    public static bool $Footer = true;
+    public static function Headerlayout(bool $header): void
     {
         if ($header) {
             if (file_exists("./Layout/Header.php")) {
@@ -13,7 +13,7 @@ class Layout
             }
         }
     }
-    public static function Footerlayout($footer)
+    public static function Footerlayout(bool $footer): void
     {
         if ($footer) {
             if (file_exists("./Layout/Footer.php")) {

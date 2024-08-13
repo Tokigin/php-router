@@ -1,34 +1,32 @@
 <?php
 class Router
 {
-    public static $Root = "/"; // project name (remove if deploy to server eg."/")
-    public static $Dir_page = "Pages";
-    public static $Extention = ".php";
-    public static $Checkdir = false;
-    public static $Return_404 = true;
-    public static function Handle()
+    public static string $Root = "/";
+    public static string $Dir_page = "Pages";
+    public static string $Extention = ".php";
+    public static bool $Checkdir = false;
+    public static bool $Return_404 = true;
+    public static function Handle(): void
     {
         $root = self::$Root;
         $dir_page = self::$Dir_page;
         $ext = self::$Extention;
         $currentUri = $_SERVER["REQUEST_URI"];
         self::CurrentUri($dir_page, $currentUri, $ext, $root);
-        $checkdir = self::$Checkdir;
-        $return_404 = self::$Return_404;
 
         if ($currentUri === "$root/") {
             require_once "./$dir_page/home$ext";
-            $return_404 = false;
+            self::$Return_404 = false;
         }
-        if ($checkdir) {
+        if (self::$Checkdir) {
             $page_return = str_replace($root, "$dir_page", $currentUri);
             require_once "$page_return$ext";
         }
-        if ($return_404) {
+        if (self::$Return_404) {
             require_once "./Layout/404$ext";
         }
     }
-    public static function CurrentUri($dir_page, $currentUri, $ext, $root)
+    public static function CurrentUri(string $dir_page, string $currentUri, string $ext, string $root): void
     {
         foreach (glob($dir_page . "/*$ext") as $file) {
             $page = str_replace("$dir_page/", "", $file);
@@ -38,35 +36,38 @@ class Router
             }
         }
     }
-    public static function CurrentPage($filename)
+    public static function CurrentPage(string $filename): bool
     {
         $currentUri = $_SERVER["REQUEST_URI"];
         $root = self::$Root;
-        $dirfile = "$root/$filename";
-        if ($currentUri == $dirfile) {
+        if ($currentUri == "$root/$filename") {
             return true;
         } else {
             return false;
         }
     }
-    public static function ManualRoute()
+    public static function ManualRoute(): void
     {
-        if (file_exists("./Manualrouter.php")) {
-            require_once "Manualrouter.php";
+        if (file_exists("./ManualRouter.php")) {
+            require_once "ManualRouter.php";
             $root = self::$Root;
             $ext = self::$Extention;
-            $return_404 = self::$Return_404;
             foreach (ManualRoute::$Route as $request => $file) {
                 if ($_SERVER['REQUEST_URI'] == "$root/$request") {
-                    $return_404 = false;
-                    require "$file";
+                    self::$Return_404 = false;
+                    if (file_exists("$file")) {
+                        require "$file";
+                    } else {
+                        self::$Return_404 = true;
+                        ErrorMessage::Show('(Using Manual Router) File not found in source code. Check the file dictionary.');
+                    }
                 }
             }
-            if ($return_404) {
+            if (self::$Return_404) {
                 require_once "./Layout/404$ext";
             }
         } else {
-            ErrorMessage::Show('There is no "Manualrouter.php" in root folder. ');
+            ErrorMessage::Show('(Using Manual Router) There is no "Manualrouter.php" in root folder. ');
         }
     }
 }

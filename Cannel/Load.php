@@ -3,12 +3,12 @@ require_once "./Cannel/Layout.php";
 require_once "./Cannel/Router.php";
 class Page
 {
-    public static $LoadDB = false;
-    public static $Boostrap = true;
-    public static $Setting = true;
-    public static $AutoRouter = true;
+    public static bool $LoadDB = false;
+    public static bool $Boostrap = true;
+    public static bool $Setting = true;
+    public static bool $AutoRouter = true;
 
-    public static function Index()
+    public static function Index(): void
     {
         self::LoadSetting(self::$Setting);
         DB::LoadDB(self::$LoadDB);
@@ -17,22 +17,20 @@ class Page
         self::AutoRouter(self::$AutoRouter);
         Layout::Footerlayout(Layout::$Footer);
     }
-    public static function RemoveHeader($filename)
+    public static function RemoveHeader(string $filename): void
     {
-        $chk_dri = Router::CurrentPage($filename);
-        if ($chk_dri) {
+        if (Router::CurrentPage($filename)) {
             Layout::$Header = false;
         }
     }
-    public static function RemoveFooter($filename)
+    public static function RemoveFooter(string $filename): void
     {
-        $chk_dri = Router::CurrentPage($filename);
-        if ($chk_dri) {
+        if (Router::CurrentPage($filename)) {
             Layout::$Footer = false;
         }
     }
 
-    public static function LoadBoostrap($boostrap)
+    public static function LoadBoostrap(bool $boostrap): void
     {
         if ($boostrap) {
             if (file_exists("./Cannel/script/Bootstrap.php")) {
@@ -43,7 +41,7 @@ class Page
             }
         }
     }
-    public static function LoadSetting($setting)
+    public static function LoadSetting(bool $setting): void
     {
         if ($setting) {
             if (file_exists("./Setting.php")) {
@@ -55,7 +53,7 @@ class Page
         }
     }
 
-    public static function AutoRouter($autorouter)
+    public static function AutoRouter(bool $autorouter): void
     {
         switch ($autorouter) {
             case true:
@@ -70,7 +68,7 @@ class Page
 
 class DB
 {
-    public static function LoadDB($loaddb)
+    public static function LoadDB(bool $loaddb): void
     {
         if ($loaddb) {
             if (file_exists("./Cannel/Connectiondd.php")) {
@@ -86,7 +84,7 @@ class DB
 }
 class ErrorMessage
 {
-    public static function Show($error)
+    public static function Show(string $error): void
     {
         echo "<h5>$error</h5>";
     }
