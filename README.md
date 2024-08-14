@@ -107,4 +107,4 @@ Page::LoadBootstrap(false);
 ## 🛠️ ManualRouter.php
 
 `ManualRouter.php` is used for manual routing or routing in sub folder. This file can be deleted if you are using Auto Router.
-Use `Request URl" => "File Path"` array structure for manual routing.
+Use `"Request URl" => "File Path"` array structure for manual routing.
