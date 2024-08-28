@@ -3,31 +3,25 @@ require_once "./Cannel/Layout.php";
 require_once "./Cannel/Router.php";
 class Page
 {
-    public static bool $LoadDB = false;
     public static bool $Bootstrap = true;
     public static bool $Setting = true;
     public static bool $AutoRouter = true;
+    public static string $Head = "Cannel";
 
     public static function Index(): void
     {
         self::LoadSetting(self::$Setting);
-        DB::LoadDB(self::$LoadDB);
-        self::LoadBootstrap(self::$Bootstrap);
         Layout::Headerlayout(Layout::$Header);
-        self::AutoRouter(self::$AutoRouter);
+        self::Handle(self::$AutoRouter);
         Layout::Footerlayout(Layout::$Footer);
     }
     public static function RemoveHeader(string $filename): void
     {
-        if (Router::CurrentPage($filename)) {
-            Layout::$Header = false;
-        }
+        if (Router::CurrentPage($filename)) Layout::$Header = false;
     }
     public static function RemoveFooter(string $filename): void
     {
-        if (Router::CurrentPage($filename)) {
-            Layout::$Footer = false;
-        }
+        if (Router::CurrentPage($filename)) Layout::$Footer = false;
     }
 
     public static function LoadBootstrap(bool $boostrap): void
@@ -54,35 +48,12 @@ class Page
         }
     }
 
-    public static function AutoRouter(bool $autorouter): void
+    public static function Handle(bool $auto_router): void
     {
-        switch ($autorouter) {
-            case true:
-                Router::Handle();
-                break;
-            case false:
-                Router::ManualRoute();
-                break;
-        }
+        $auto_router ?  Router::AutoRouter() : Router::ManualRouter();
     }
 }
 
-class DB
-{
-    public static function LoadDB(bool $loaddb): void
-    {
-        if ($loaddb) {
-            if (file_exists("./Cannel/Connectiondd.php")) {
-                require "Connection.php";
-                Connection::CreateDB();
-                Connection::CreateUserTable();
-            } else {
-                ErrorMessage::Show('There is no Connection.php in ./Cannel.');
-                die();
-            }
-        }
-    }
-}
 class ErrorMessage
 {
     public static function Show(string $error): void
