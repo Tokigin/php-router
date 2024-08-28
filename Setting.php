@@ -8,4 +8,3 @@ Router::$Home_Page = "home"; // Change Home page
 // Page::RemoveHeader("pagename"); // Remove Header in Specific page
 // Page::RemoveFooter("pagename"); // Remove Footer in Specific page
 // Router::$Extension = ".html"; // Switch to html mode
-// Page::LoadBootstrap(false); // Remove Bootstrap

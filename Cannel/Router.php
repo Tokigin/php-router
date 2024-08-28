@@ -32,7 +32,7 @@ class Router
     }
     public static function CurrentUri(string $dir_page, string $currentUri, string $ext, string $root): void
     {
-        foreach (glob($dir_page . "/*$ext") as $file) {
+        foreach (glob("$dir_page/*$ext") as $file) {
             $page = str_replace("$dir_page/", "", $file);
             if ("$currentUri$ext" == "$root/$page") {
                 self::$Checkdir = true;
