@@ -18,9 +18,7 @@ class Router
             if (file_exists("./$dir_page/$index$ext")) {
                 require_once "./$dir_page/$index$ext";
                 self::$Return_404 = false;
-            } else {
-                ErrorMessage::Show("(Using Auto Router) File not found in source code. Check the file dictionary.");
-            }
+            } else ErrorMessage::Show("(Using Auto Router) File not found in source code. Check the file dictionary.");
         }
         if (self::$Checkdir) {
             $page_return = str_replace($root, "$dir_page", $_SERVER["REQUEST_URI"]);
@@ -53,18 +51,13 @@ class Router
             $ext = self::$Extension;
             foreach (ManualRoute::$Route as $request => $file) {
                 if ($_SERVER['REQUEST_URI'] == "$root/$request") {
-                    self::$Return_404 = false;
                     if (file_exists("$file")) {
+                        self::$Return_404 = false;
                         require "$file";
-                    } else {
-                        self::$Return_404 = true;
-                        ErrorMessage::Show('(Using Manual Router) File not found in source code. Check the file dictionary.');
-                    }
+                    } else ErrorMessage::Show('(Using Manual Router) File not found in source code. Check the file dictionary.');
                 }
             }
             if (self::$Return_404) require_once "./Layout/404$ext";
-        } else {
-            ErrorMessage::Show('(Using Manual Router) There is no "ManualRouter.php" in root folder. ');
-        }
+        } else ErrorMessage::Show('(Using Manual Router) There is no "ManualRouter.php" in root folder. ');
     }
 }
