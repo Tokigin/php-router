@@ -4,6 +4,7 @@ require_once "./Cannel/Router.php";
 class Page
 {
     public static bool $Bootstrap = true;
+    public static bool $Tailwind = true;
     public static bool $Setting = true;
     public static bool $AutoRouter = true;
 
@@ -29,6 +30,17 @@ class Page
                 require "script/Bootstrap.php";
             } else {
                 ErrorMessage::Show('There is no Bootstrap.php in ./Cannel/script.');
+                die();
+            }
+        }
+    }
+    public static function LoadTailwind(): void
+    {
+        if (self::$Tailwind) {
+            if (file_exists("./Cannel/script/Tailwind.php")) {
+                require "script/Tailwind.php";
+            } else {
+                ErrorMessage::Show('There is no Tailwind.php in ./Cannel/script.');
                 die();
             }
         }
