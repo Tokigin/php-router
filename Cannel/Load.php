@@ -25,25 +25,11 @@ class Page
 
     public static function LoadBootstrap(): void
     {
-        if (self::$Bootstrap) {
-            if (file_exists("./Cannel/script/Bootstrap.php")) {
-                require "script/Bootstrap.php";
-            } else {
-                ErrorMessage::Show('There is no Bootstrap.php in ./Cannel/script.');
-                die();
-            }
-        }
+        if (self::$Bootstrap) file_exists("./Cannel/script/Bootstrap.php") ? require "script/Bootstrap.php" : ErrorText::Show('There is no Bootstrap.php in ./Cannel/script.');
     }
     public static function LoadTailwind(): void
     {
-        if (self::$Tailwind) {
-            if (file_exists("./Cannel/script/Tailwind.php")) {
-                require "script/Tailwind.php";
-            } else {
-                ErrorMessage::Show('There is no Tailwind.php in ./Cannel/script.');
-                die();
-            }
-        }
+        if (self::$Tailwind) file_exists("./Cannel/script/Tailwind.php") ? require "script/Tailwind.php" : ErrorText::Show('There is no Tailwind.php in ./Cannel/script.');
     }
     public static function LoadSetting(bool $setting): void
     {
@@ -51,7 +37,7 @@ class Page
             if (file_exists("./Setting.php")) {
                 require_once "./Setting.php";
             } else {
-                ErrorMessage::Show('There is no "Setting.php" in root folder.');
+                ErrorText::Show('There is no "Setting.php" in root folder.');
                 die();
             }
         }
@@ -59,14 +45,15 @@ class Page
 
     private static function Handle(bool $auto_router): void
     {
-        $auto_router ?  Router::AutoRouter() : Router::ManualRouter();
+        $auto_router ? Router::AutoRouter() : Router::ManualRouter();
     }
 }
 
-class ErrorMessage
+class ErrorText
 {
     public static function Show(string $error): void
     {
-        echo "<h6>$error</h6>";
+        echo "<h5>$error</h5>";
     }
 }
+Page::LoadSetting(Page::$Setting);

@@ -24,7 +24,7 @@ Easy to use php router with auto and manual routing.
 `Cannel` looks for `.php` or `.html` files in the `Pages/` directory. Each page is exposed as a route based on its file name. To use `.html` files, switch extention in Setting.php.
 
 > [!NOTE]
-> Currently Auto Router can only route files in `Pages/` directory. It will not recognize the sub folder in `Pages/` directory. If you want to use sub folder in `Pages/` directory, switch to manual router in `Setting.php`.
+> Currently Auto Router can only route files in `Pages/` directory. It will not recognize the sub folders in `Pages/` directory. If you want to use sub folders in `Pages/` directory, switch to manual router in `Setting.php`.
 
 There's nothing special about `Components/`, it is just for sake of clear project structure. You can delete the folder or create one as you like.
 
@@ -35,6 +35,12 @@ There's nothing special about `Components/`, it is just for sake of clear projec
 ## 🛠️ Setting.php
 
 `Setting.php` is for configuring the `Cannel` source code.
+
+### Change Home page
+
+```text
+Router::$Home_Page = "home";
+```
 
 ### Remove header on all pages
 
@@ -60,16 +66,10 @@ Page::RemoveHeader("page-name");
 Page::RemoveHeader("page-name");
 ```
 
-### Load mysql database
+### Switch to html
 
 ```text
-DB::LoadDB(true);
-```
-
-### Switch to html mode
-
-```text
-Router::$Extention = ".html";
+Router::$Extension = ".html";
 ```
 
 ### Disable Auto Router
@@ -84,27 +84,38 @@ Page::$AutoRouter = false;
 Router::$Root = "/project-name";
 ```
 
-### Page::LoadBootstrap(false);
+## 📄 index.php
+
+`index.php` is the root page of the project. You can modify elements in here. However, leave the `Page::Index();` in `<Body>` tag for the routing to work.
+
+### Add Bootstrap
 
 ```text
-Page::LoadBootstrap(false);
+Page::LoadBootstrap();
 ```
 
-### Default Values
+### Add Tailwind
+
+```text
+Page::LoadTainwind();
+```
+
+## 📄 ManualRouter.php
+
+`ManualRouter.php` is used for manual routing or routing in sub folder. This file can be deleted if you are using Auto Router.
+Use `"Request URl" => "File Path"` array structure for manual routing.
+
+## Default Values
 
 | Code                               | Action                                     | Default |
 | :--------------------------------- | :----------------------------------------- | :------ |
+| `Router::$Root = "/project-name";` | Project name (remove if deploy to server ) | /       |
+| `Router::$Home_Page = "home";`     | Change Home page                           | True    |
 | `Layout::$Header = false;`         | Remove header on all pages                 | True    |
 | `Layout::$Footer = false;`         | Remove footer on all pages                 | True    |
 | `Page::RemoveHeader("page-name");` | Remove Header in Specific page             | None    |
 | `Page::RemoveFooter("page-name");` | Remove Footer in Specific page             | None    |
-| `DB::LoadDB(true);`                | Load mysql database                        | False   |
-| `Router::$Extention = ".html";`    | Switch to html mode                        | .php    |
+| `Router::$Extension = ".html";`    | Switch to html mode                        | .php    |
 | `Page::$AutoRouter = false;`       | Disable Auto Router                        | True    |
-| `Router::$Root = "/project-name";` | Project name (remove if deploy to server ) | /       |
-| `Page::LoadBootstrap(false);`      | Remove Bootstrap                           | True    |
-
-## 🛠️ ManualRouter.php
-
-`ManualRouter.php` is used for manual routing or routing in sub folder. This file can be deleted if you are using Auto Router.
-Use `"Request URl" => "File Path"` array structure for manual routing.
+| `Page::LoadBootstrap();`           | Add Bootstrap                              | True    |
+| `Page::LoadTailwind();`            | Add Tailwind                               | True    |

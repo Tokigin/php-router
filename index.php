@@ -2,7 +2,6 @@
 <html lang="en">
 <?php
 require_once "./Cannel/Load.php";
-Page::LoadSetting(Page::$Setting);
 ?>
 
 <head>
