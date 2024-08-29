@@ -57,7 +57,7 @@ class Page
         }
     }
 
-    public static function Handle(bool $auto_router): void
+    private static function Handle(bool $auto_router): void
     {
         $auto_router ?  Router::AutoRouter() : Router::ManualRouter();
     }
