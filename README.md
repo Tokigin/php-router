@@ -8,7 +8,7 @@ Easy to use php router with auto and manual routing.
 /
 ├── Cannel/
 ├── Components/
-│   └── herobanner.php/
+│   └── hero-banner.php/
 ├── Layout/
 │   └── 404.html/
 │   └── 404.php/
@@ -21,12 +21,12 @@ Easy to use php router with auto and manual routing.
 └── Setting.php/
 ```
 
-`Cannel` looks for `.php` or `.html` files in the `Pages/` directory. Each page is exposed as a route based on its file name. To use `.html` files, switch extention in Setting.php.
+`Cannel` looks for `.php` or `.html` files in the `Pages/` directory. Each page is exposed as a route based on its file name. To use `.html` files, switch extension in Setting.php.
 
 > [!NOTE]
 > Currently Auto Router can only route files in `Pages/` directory. It will not recognize the sub folders in `Pages/` directory. If you want to use sub folders in `Pages/` directory, switch to manual router in `Setting.php`.
 
-There's nothing special about `Components/`, it is just for sake of clear project structure. You can delete the folder or create one as you like.
+There's nothing special about `Sections/`, it is just for sake of clear project structure. You can delete the folder or create one as you like.
 
 `Layout/` is for header, footer and 404 pages.
 

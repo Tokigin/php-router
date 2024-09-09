@@ -1,3 +1,3 @@
 <?php
 $title = "Cannel Framework";
-include "./Components/herobanner.php";
+include "./Sections/hero-banner.php";
