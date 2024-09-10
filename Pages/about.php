@@ -1,3 +1,3 @@
 <?php
 $title = "This is About Page";
-include "./Components/herobanner.php";
+include "./Sections/hero-banner.php";
