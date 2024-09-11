@@ -18,23 +18,12 @@ class Router
         $dir_page = self::$Dir_page;
         $ext = self::$Extension;
         $index = self::$Home_Page;
-        self::CheckSub();
-        self::CheckPage(self::$Dir_page, $_SERVER["REQUEST_URI"], $ext, $root);
+        self::Check_Sub_Folder();
         self::Index_Fetching($root, $dir_page, $index, $ext);
+        self::CheckPage(self::$Dir_page, $_SERVER["REQUEST_URI"], $ext, $root);
         self::Page_Fetching($root, $dir_page, $ext);
-        if (self::$Sub_Folder && self::$Return_404) {
-            $sub_folders = self::GetSub();
-            foreach ($sub_folders as $subfolder) {
-                self::CheckPage($dir_page . $subfolder, $_SERVER["REQUEST_URI"], $ext, $root);
-                echo $_SERVER["REQUEST_URI"] . "url<br>";
-                echo $dir_page . $subfolder . "dir<br>";
-            }
-
-            self::Index_Fetching($root, $dir_page . $subfolder, $index, $ext);
-            self::Page_Fetching($root, $dir_page . $subfolder, $ext);
-        }
-
-        if (self::$Return_404) self::Return404();
+        if (self::$Sub_Folder && self::$Return_404) self::Sub_Page_Fetching($dir_page, $ext, $root);
+        if (self::$Return_404) self::Return_404();
     }
     private static function Index_Fetching(string $root, string $dir_page, string $index, string $ext): void
     {
@@ -50,6 +39,14 @@ class Router
         if (self::$Check_dir) {
             require_once str_replace($root, "$dir_page", $_SERVER["REQUEST_URI"]) . "$ext";
         }
+    }
+    private static function Sub_Page_Fetching(string $dir_page, string $ext, string $root): void
+    {
+        $sub_folders = self::Get_Sub_Folder();
+        foreach ($sub_folders as $subfolder) {
+            self::CheckPage($dir_page . $subfolder, $_SERVER["REQUEST_URI"], $ext, $root);
+        }
+        self::Page_Fetching($root, $dir_page . $subfolder, $ext);
     }
     private static function CheckPage(string $dir_page, string $currentUri, string $ext, string $root): void
     {
@@ -77,10 +74,10 @@ class Router
                     } else ErrorText::Show("(Using Manual Router) $file file not found in source code. Check the file dictionary.");
                 }
             }
-            if (self::$Return_404) self::Return404();
+            if (self::$Return_404) self::Return_404();
         } else ErrorText::Show('(Using Manual Router) There is no "ManualRouter.php" in root folder. ');
     }
-    public static function Return404(): void
+    public static function Return_404(): void
     {
         $ext = self::$Extension;
         $dir_page = self::$Dir_page;
@@ -88,15 +85,15 @@ class Router
         file_exists("./Layout/404$ext") ? require_once "./Layout/404$ext" : require_once "./$dir_page/$index$ext";
     }
 
-    private static function GetSub()
+    private static function Get_Sub_Folder(): array
     {
-        $subfolders = glob('./Pages/*', GLOB_ONLYDIR);
-        foreach ($subfolders as $subfolder) {
-            $array[] = str_replace('./Pages', '', $subfolder);
+        $folders = glob('./Pages/*', GLOB_ONLYDIR);
+        foreach ($folders as $folder) {
+            $array[] = str_replace('./Pages', '', $folder);
         }
         return $array;
     }
-    private static function CheckSub()
+    private static function Check_Sub_Folder(): void
     {
         (count(glob('./Pages/*', GLOB_ONLYDIR)) > 0) ? self::$Sub_Folder = true : self::$Sub_Folder = false;
     }
