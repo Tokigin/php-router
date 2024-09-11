@@ -8,9 +8,13 @@ class Router
     private static string $Dir_page = "Pages";
     private static bool $Return_404 = true;
     private static bool $Sub_Folder = false;
+    public static function SetRoot(string $root)
+    {
+        self::$Root = "/" . str_replace("/", "", $root);
+    }
     public static function AutoRouter(): void
     {
-        $root = self::$Root;
+        $root =  self::$Root;
         $dir_page = self::$Dir_page;
         $ext = self::$Extension;
         $index = self::$Home_Page;
@@ -18,17 +22,17 @@ class Router
         self::CheckPage(self::$Dir_page, $_SERVER["REQUEST_URI"], $ext, $root);
         self::Index_Fetching($root, $dir_page, $index, $ext);
         self::Page_Fetching($root, $dir_page, $ext);
-        // if (self::$Sub_Folder && self::$Return_404) {
-        //     $sub_folders = self::GetSub();
-        //     foreach ($sub_folders as $subfolder) {
-        //         self::CheckPage($dir_page . $subfolder, $_SERVER["REQUEST_URI"], $ext, $root);
-        //         echo $_SERVER["REQUEST_URI"] . "<br>";
-        //         echo $dir_page . $subfolder . "<br>";
-        //     }
+        if (self::$Sub_Folder && self::$Return_404) {
+            $sub_folders = self::GetSub();
+            foreach ($sub_folders as $subfolder) {
+                self::CheckPage($dir_page . $subfolder, $_SERVER["REQUEST_URI"], $ext, $root);
+                echo $_SERVER["REQUEST_URI"] . "url<br>";
+                echo $dir_page . $subfolder . "dir<br>";
+            }
 
-        //     self::Index_Fetching($root, $dir_page . $subfolder, $index, $ext);
-        //     self::Page_Fetching($root, $dir_page . $subfolder, $ext);
-        // }
+            self::Index_Fetching($root, $dir_page . $subfolder, $index, $ext);
+            self::Page_Fetching($root, $dir_page . $subfolder, $ext);
+        }
 
         if (self::$Return_404) self::Return404();
     }

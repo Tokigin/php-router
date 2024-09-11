@@ -8,7 +8,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item d-flex gap-2">
                     <a class="nav-link text-white" href="<?php echo Router::$Root ?>">Home</a>
-                    <a class="nav-link text-white" href="about">About</a>
+                    <a class="nav-link text-white" href="<?php echo Router::$Root ?>/about">About</a>
                 </li>
             </ul>
 

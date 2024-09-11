@@ -81,7 +81,7 @@ Page::$AutoRouter = false;
 ### Project name (remove if deploy to server )
 
 ```text
-Router::$Root = "/project-name";
+Router::SetRoot("project-name");
 ```
 
 ## 📄 index.php
@@ -109,7 +109,7 @@ Use `"Request URl" => "File Path"` array structure for manual routing.
 
 | Code                               | Action                                     | Default |
 | :--------------------------------- | :----------------------------------------- | :------ |
-| `Router::$Root = "/project-name";` | Project name (remove if deploy to server ) | /       |
+| `Router::SetRoot("project-name");` | Project name (remove if deploy to server ) | /       |
 | `Router::$Home_Page = "home";`     | Change Home page                           | True    |
 | `Layout::$Header = false;`         | Remove header on all pages                 | True    |
 | `Layout::$Footer = false;`         | Remove footer on all pages                 | True    |
