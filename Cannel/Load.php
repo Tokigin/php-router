@@ -11,7 +11,7 @@ class Page
     public static function Index(): void
     {
         Layout::Headerlayout(Layout::$Header);
-        self::Handle(self::$AutoRouter);
+        self::$AutoRouter ? AutoRouter::RunRouter() : ManualRouter::RunRouter();
         Layout::Footerlayout(Layout::$Footer);
     }
     public static function RemoveHeader(string $filename): void
@@ -41,11 +41,6 @@ class Page
                 die();
             }
         }
-    }
-
-    private static function Handle(bool $auto_router): void
-    {
-        $auto_router ? Router::AutoRouter() : Router::ManualRouter();
     }
 }
 
