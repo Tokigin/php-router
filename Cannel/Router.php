@@ -7,7 +7,7 @@ class Router
     private static bool $Check_dir = false;
     public static string $Dir_page = "Pages";
     public static bool $Return_404 = true;
-    public static bool $Sub_Folder = false;
+
     public static function SetRoot(string $root): void
     {
         self::$Root = "/" . str_replace("/", "", $root);
@@ -71,9 +71,9 @@ class Router
         }
         return $array;
     }
-    public static function Check_Sub_Folder(): void
+    public static function Check_Sub_Folder(): bool
     {
-        (count(glob('./Pages/*', GLOB_ONLYDIR)) > 0) ? self::$Sub_Folder = true : self::$Sub_Folder = false;
+        return (count(glob('./Pages/*', GLOB_ONLYDIR)) > 0) ?  true : false;
     }
     private static function File($file): string
     {
@@ -85,11 +85,10 @@ class AutoRouter extends Router
 {
     public static function RunRouter(): void
     {
-        self::Check_Sub_Folder();
         self::Index_Fetching(self::$Root, self::$Dir_page, self::$Home_Page, self::$Extension);
         if (self::$Return_404) self::CheckPage(self::$Dir_page, self::$Extension, self::$Root);
         self::Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
-        if (self::$Sub_Folder && self::$Return_404) self::Sub_Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
+        if (self::Check_Sub_Folder() && self::$Return_404) self::Sub_Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
         if (self::$Return_404) self::Return_404();
     }
 }
