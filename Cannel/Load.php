@@ -10,9 +10,9 @@ class Page
 
     public static function Index(): void
     {
-        Layout::Headerlayout(Layout::$Header);
-        self::$AutoRouter ? AutoRouter::RunRouter() : ManualRouter::RunRouter();
-        Layout::Footerlayout(Layout::$Footer);
+        Layout::Header_layout(Layout::$Header);
+        self::$AutoRouter ? AutoRouter::Run() : ManualRouter::Run();
+        Layout::Footer_layout(Layout::$Footer);
     }
     public static function RemoveHeader(string $filename): void
     {
