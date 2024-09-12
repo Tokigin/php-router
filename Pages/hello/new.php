@@ -1,1 +1,3 @@
-<h1>hello new</h1>
+<?php
+$title = "This is sub folder new page";
+include "./Sections/hero-banner.php";
