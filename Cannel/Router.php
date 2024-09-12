@@ -4,9 +4,9 @@ class Router
     public static string $Root = "/";
     public static string $Extension = ".php";
     public static string $Home_Page = "index";
-    private static bool $Check_dir = false;
     public static string $Dir_page = "Pages";
     public static bool $Return_404 = true;
+    private static bool $Check_dir = false;
 
     public static function SetRoot(string $root): void
     {
@@ -26,21 +26,6 @@ class Router
     {
         $file = self::File($_SERVER["REQUEST_URI"]);
         if (self::$Check_dir) require_once str_replace($root, "$dir_page",   "$file$ext");
-    }
-    public static function Sub_Page_Fetching(string $dir_page, string $ext, string $root): void
-    {
-        $sub_folders = self::Get_Sub_Folder();
-        $index = self::$Home_Page;
-        $file = self::File(str_replace("$root/", "", $_SERVER["REQUEST_URI"]));
-        foreach ($sub_folders as $subfolder) {
-            if ("/" . $file === $subfolder) {
-                if (file_exists("./$dir_page/$index$ext")) {
-                    require_once "./$dir_page$subfolder/$index$ext";
-                    self::$Return_404 = false;
-                } else ErrorText::Show("(Using Auto Router) $index$ext file not found in source code. Check the file dictionary.");
-            } else self::CheckPage($dir_page . $subfolder, $ext, $root);
-        }
-        if (self::$Return_404)  self::Page_Fetching($dir_page . $file, $ext, $root);
     }
     public static function CheckPage(string $dir_page, string $ext, string $root): void
     {
@@ -62,19 +47,6 @@ class Router
         $index = self::$Home_Page;
         file_exists("./Layout/404$ext") ? require_once "./Layout/404$ext" : require_once "./$dir_page/$index$ext";
     }
-
-    private static function Get_Sub_Folder(): array
-    {
-        $folders = glob('./Pages/*', GLOB_ONLYDIR);
-        foreach ($folders as $folder) {
-            $array[] = str_replace('./Pages', '', $folder);
-        }
-        return $array;
-    }
-    public static function Check_Sub_Folder(): bool
-    {
-        return (count(glob('./Pages/*', GLOB_ONLYDIR)) > 0) ?  true : false;
-    }
     private static function File($file): string
     {
         return ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
@@ -88,7 +60,6 @@ class AutoRouter extends Router
         self::Index_Fetching(self::$Root, self::$Dir_page, self::$Home_Page, self::$Extension);
         if (self::$Return_404) self::CheckPage(self::$Dir_page, self::$Extension, self::$Root);
         self::Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
-        if (self::Check_Sub_Folder() && self::$Return_404) self::Sub_Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
         if (self::$Return_404) self::Return_404();
     }
 }
