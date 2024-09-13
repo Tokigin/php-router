@@ -6,10 +6,12 @@ class Router
     public static string $Home_Page = "index";
     protected static string $Dir_page = "Pages";
     protected static bool $Return_404 = true;
+    protected static bool $Root_changed = false;
 
     public static function SetRoot(string $root): void
     {
         self::$Root = "/" . str_replace("/", "", $root);
+        self::$Root_changed = true;
     }
     public static function CurrentPage(string $filename): bool
     {
@@ -26,7 +28,7 @@ class Router
     {
         if (!empty($file)) {
             (str_contains($file, "?")) ? $file = strtok($file, '?')  : $file;
-            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
+            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") :  $file;
         }
         return $file;
     }
@@ -40,20 +42,36 @@ class AutoRouter extends Router
     {
         $file = self::File($_SERVER["REQUEST_URI"]);
         $index = self::$Home_Page;
-        if (self::$Check_dir && !self::$Sub_Index) require_once str_replace($root, "$dir_page", "$file$ext");
-        if (self::$Check_dir && self::$Sub_Index) require_once str_replace($root, "$dir_page", "$file/$index$ext");
+        if (self::$Root_changed) {
+            if (self::$Check_dir && !self::$Sub_Index) require_once str_replace($root, $dir_page, "$file$ext");
+            if (self::$Check_dir && self::$Sub_Index) require_once str_replace($root, $dir_page, "$file/$index$ext");
+        } else {
+            if (self::$Check_dir && !self::$Sub_Index) require_once "./$dir_page$file$ext";
+            if (self::$Check_dir && self::$Sub_Index) require_once "./$dir_page$file/$index$ext";
+        }
     }
     private static function CheckPage(string $dir_page, string $ext, string $root): void
     {
         $file = self::File(str_replace("$root/", "", $_SERVER["REQUEST_URI"]));
         $index = self::$Home_Page;
-        if (file_exists("$dir_page/$file$ext")) {
-            self::$Check_dir = true;
-            self::$Return_404 = false;
-        } else if (file_exists("$dir_page/$index$ext")) {
-            self::$Check_dir = true;
-            self::$Return_404 = false;
-            self::$Sub_Index = true;
+        if (!self::$Root_changed) {
+            if (file_exists("./$dir_page$file$ext")) {
+                self::$Check_dir = true;
+                self::$Return_404 = false;
+            } else if (file_exists("./$dir_page$file/$index$ext")) {
+                self::$Check_dir = true;
+                self::$Return_404 = false;
+                self::$Sub_Index = true;
+            }
+        } else {
+            if (file_exists("./$dir_page/$file$ext")) {
+                self::$Check_dir = true;
+                self::$Return_404 = false;
+            } else if (file_exists("./$dir_page/$file/$index$ext")) {
+                self::$Check_dir = true;
+                self::$Return_404 = false;
+                self::$Sub_Index = true;
+            }
         }
     }
 
