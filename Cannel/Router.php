@@ -26,8 +26,8 @@ class Router
     public static function File($file): string
     {
         if (!empty($file)) {
+            (str_contains($file, "?")) ? $file = strtok($file, '?')  : $file;
             ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
-            (str_contains($file, "?")) ? $file = substr($file, 0, strpos($file, "?"))  : $file;
         }
         return $file;
     }
@@ -36,33 +36,31 @@ class Router
 class AutoRouter extends Router
 {
     private static bool $Check_dir = false;
-    private static function Index_Fetching(string $dir_page, string $index, string $ext, string $root): void
-    {
-        if ($_SERVER["REQUEST_URI"] === "$root/") {
-            if (file_exists("./$dir_page/$index$ext")) {
-                require_once "./$dir_page/$index$ext";
-                self::$Return_404 = false;
-            } else ErrorText::Show("(Using Auto Router) $index$ext file not found in source code. Check the file dictionary.");
-        }
-    }
+    private static bool $Sub_Index = false;
     private static function Page_Fetching(string $dir_page, string $ext, string $root): void
     {
         $file = self::File($_SERVER["REQUEST_URI"]);
-        if (self::$Check_dir) require_once str_replace($root, "$dir_page", "$file$ext");
+        $index = self::$Home_Page;
+        if (self::$Check_dir && !self::$Sub_Index) require_once str_replace($root, "$dir_page", "$file$ext");
+        if (self::$Check_dir && self::$Sub_Index) require_once str_replace($root, "$dir_page", "$file/$index$ext");
     }
     private static function CheckPage(string $dir_page, string $ext, string $root): void
     {
         $file = self::File(str_replace("$root/", "", $_SERVER["REQUEST_URI"]));
+        $index = self::$Home_Page;
         if (file_exists("$dir_page/$file$ext")) {
             self::$Check_dir = true;
             self::$Return_404 = false;
+        } else if (file_exists("$dir_page/$index$ext")) {
+            self::$Check_dir = true;
+            self::$Return_404 = false;
+            self::$Sub_Index = true;
         }
     }
 
     public static function Run(): void
     {
-        self::Index_Fetching(self::$Dir_page, self::$Home_Page, self::$Extension, self::$Root,);
-        if (self::$Return_404) self::CheckPage(self::$Dir_page, self::$Extension, self::$Root);
+        self::CheckPage(self::$Dir_page, self::$Extension, self::$Root);
         self::Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
         if (self::$Return_404) self::Return_404();
     }
