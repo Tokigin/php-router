@@ -52,7 +52,10 @@ class AutoRouter extends Router
     }
     private static function File($file): string
     {
-        if (!empty($file)) ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
+        if (!empty($file)) {
+            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
+            (str_contains($file, "?")) ? $file = substr($file, 0, strpos($file, "?"))  : $file;
+        }
         return $file;
     }
     public static function Run(): void
