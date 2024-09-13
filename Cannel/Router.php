@@ -23,6 +23,14 @@ class Router
         $index = self::$Home_Page;
         file_exists("./Layout/404$ext") ? require_once "./Layout/404$ext" : require_once "./$dir_page/$index$ext";
     }
+    public static function File($file): string
+    {
+        if (!empty($file)) {
+            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
+            (str_contains($file, "?")) ? $file = substr($file, 0, strpos($file, "?"))  : $file;
+        }
+        return $file;
+    }
 }
 
 class AutoRouter extends Router
@@ -50,14 +58,7 @@ class AutoRouter extends Router
             self::$Return_404 = false;
         }
     }
-    private static function File($file): string
-    {
-        if (!empty($file)) {
-            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
-            (str_contains($file, "?")) ? $file = substr($file, 0, strpos($file, "?"))  : $file;
-        }
-        return $file;
-    }
+
     public static function Run(): void
     {
         self::Index_Fetching(self::$Dir_page, self::$Home_Page, self::$Extension, self::$Root,);
@@ -73,8 +74,9 @@ class ManualRouter extends Router
         if (file_exists("./ManualRouter.php")) {
             require_once "./ManualRouter.php";
             $root = self::$Root;
+            $requested_file = self::File($_SERVER["REQUEST_URI"]);
             foreach (ManualRoute::$Route as $request => $file) {
-                if ($_SERVER['REQUEST_URI'] === "$root$request") {
+                if ($requested_file === "$root$request") {
                     if (file_exists($file)) {
                         self::$Return_404 = false;
                         require $file;
