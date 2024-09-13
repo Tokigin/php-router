@@ -4,9 +4,8 @@ class Router
     public static string $Root = "/";
     public static string $Extension = ".php";
     public static string $Home_Page = "index";
-    public static string $Dir_page = "Pages";
-    public static bool $Return_404 = true;
-
+    protected static string $Dir_page = "Pages";
+    protected static bool $Return_404 = true;
 
     public static function SetRoot(string $root): void
     {
@@ -16,14 +15,14 @@ class Router
     {
         return $_SERVER["REQUEST_URI"] === self::$Root . "/$filename" ? true : false;
     }
-    public static function Return_404(): void
+    protected static function Return_404(): void
     {
         $ext = self::$Extension;
         $dir_page = self::$Dir_page;
         $index = self::$Home_Page;
         file_exists("./Layout/404$ext") ? require_once "./Layout/404$ext" : require_once "./$dir_page/$index$ext";
     }
-    public static function File($file): string
+    protected static function File($file): string
     {
         if (!empty($file)) {
             (str_contains($file, "?")) ? $file = strtok($file, '?')  : $file;
