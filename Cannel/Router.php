@@ -27,8 +27,8 @@ class Router
     protected static function File($file): string
     {
         if (!empty($file)) {
-            (str_contains($file, "?")) ? $file = strtok($file, '?')  : $file;
-            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") :  $file;
+            (str_contains($file, "?")) ? $file = strtok($file, '?') : $file;
+            ($file[strlen($file) - 1] === "/") ? $file = rtrim($file, "/") : $file;
         }
         return $file;
     }
@@ -36,48 +36,21 @@ class Router
 
 class AutoRouter extends Router
 {
-    private static bool $Check_dir = false;
-    private static bool $Sub_Index = false;
     private static function Page_Fetching(string $dir_page, string $ext, string $root): void
     {
-        $file = self::File($_SERVER["REQUEST_URI"]);
+        self::$Root_changed ? $file = self::File(str_replace("$root", "", $_SERVER["REQUEST_URI"])) : $file = self::File($_SERVER["REQUEST_URI"]);
         $index = self::$Home_Page;
-        if (self::$Root_changed) {
-            if (self::$Check_dir && !self::$Sub_Index) require_once str_replace($root, $dir_page, "$file$ext");
-            if (self::$Check_dir && self::$Sub_Index) require_once str_replace($root, $dir_page, "$file/$index$ext");
-        } else {
-            if (self::$Check_dir && !self::$Sub_Index) require_once "./$dir_page$file$ext";
-            if (self::$Check_dir && self::$Sub_Index) require_once "./$dir_page$file/$index$ext";
-        }
-    }
-    private static function CheckPage(string $dir_page, string $ext, string $root): void
-    {
-        $file = self::File(str_replace("$root/", "", $_SERVER["REQUEST_URI"]));
-        $index = self::$Home_Page;
-        if (!self::$Root_changed) {
-            if (file_exists("./$dir_page$file$ext")) {
-                self::$Check_dir = true;
-                self::$Return_404 = false;
-            } else if (file_exists("./$dir_page$file/$index$ext")) {
-                self::$Check_dir = true;
-                self::$Return_404 = false;
-                self::$Sub_Index = true;
-            }
-        } else {
-            if (file_exists("./$dir_page/$file$ext")) {
-                self::$Check_dir = true;
-                self::$Return_404 = false;
-            } else if (file_exists("./$dir_page/$file/$index$ext")) {
-                self::$Check_dir = true;
-                self::$Return_404 = false;
-                self::$Sub_Index = true;
-            }
+        if (file_exists("./$dir_page/$file$ext")) {
+            self::$Return_404 = false;
+            require_once "./$dir_page/$file$ext";
+        } else if (file_exists("./$dir_page/$file/$index$ext") && self::$Root_changed) {
+            self::$Return_404 = false;
+            require_once "./$dir_page/$file/$index$ext";
         }
     }
 
     public static function Run(): void
     {
-        self::CheckPage(self::$Dir_page, self::$Extension, self::$Root);
         self::Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
         if (self::$Return_404) self::Return_404();
     }
@@ -95,7 +68,8 @@ class ManualRouter extends Router
                     if (file_exists($file)) {
                         self::$Return_404 = false;
                         require $file;
-                    } else ErrorText::Show("(Using Manual Router) $file file not found in source code. Check the file dictionary.");
+                    } else
+                        ErrorText::Show("(Using Manual Router) $file file not found in source code. Check the file dictionary.");
                 }
             }
             if (self::$Return_404) self::Return_404();
