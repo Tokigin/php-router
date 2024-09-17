@@ -23,9 +23,6 @@ Easy to use php router with auto and manual routing.
 
 `Cannel` looks for `.php` or `.html` files in the `Pages/` directory. Each page is exposed as a route based on its file name. To use `.html` files, switch extension in Setting.php.
 
-> [!NOTE]
-> Currently Auto Router can only route files from sub folders in `Pages/` directory. It will not recognize the index page of sub folders. If you want to use index page for sub folder, create php file which is same name as sub folder in same directory, or switch to manual router in `Setting.php`.
-
 There's nothing special about `Sections/`, it is just for sake of clear project structure. You can delete the folder or create one as you like.
 
 `Layout/` is for header, footer and 404 pages.
