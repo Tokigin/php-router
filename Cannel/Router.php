@@ -5,7 +5,6 @@ class Router
     public static string $Extension = ".php";
     public static string $Home_Page = "index";
     protected static string $Dir_page = "Pages";
-    protected static bool $Return_404 = true;
     protected static bool $Root_changed = false;
 
     public static function SetRoot(string $root): void
@@ -41,18 +40,15 @@ class AutoRouter extends Router
         self::$Root_changed ? $file = self::File(str_replace("$root", "", $_SERVER["REQUEST_URI"])) : $file = self::File($_SERVER["REQUEST_URI"]);
         $index = self::$Home_Page;
         if (file_exists("./$dir_page/$file$ext")) {
-            self::$Return_404 = false;
             require_once "./$dir_page/$file$ext";
         } else if (file_exists("./$dir_page/$file/$index$ext") && self::$Root_changed) {
-            self::$Return_404 = false;
             require_once "./$dir_page/$file/$index$ext";
-        }
+        } else self::Return_404();
     }
 
     public static function Run(): void
     {
         self::Page_Fetching(self::$Dir_page, self::$Extension, self::$Root);
-        if (self::$Return_404) self::Return_404();
     }
 }
 class ManualRouter extends Router
@@ -66,13 +62,10 @@ class ManualRouter extends Router
             foreach (ManualRoute::$Route as $request => $file) {
                 if ($requested_file === "$root$request") {
                     if (file_exists($file)) {
-                        self::$Return_404 = false;
                         require $file;
-                    } else
-                        ErrorText::Show("(Using Manual Router) $file file not found in source code. Check the file dictionary.");
-                }
+                    } else ErrorText::Show("(Using Manual Router) $file file not found in source code. Check the file dictionary.");
+                } else self::Return_404();
             }
-            if (self::$Return_404) self::Return_404();
         } else ErrorText::Show('(Using Manual Router) There is no "ManualRouter.php" in root folder. ');
     }
 }
