@@ -6,12 +6,12 @@ class Router
     public static string $Home_Page = "index";
     protected static string $Dir_page = "Pages";
     protected static bool $Return_404 = true;
-    protected static bool $Root_changed = false;
+    // protected static bool $Root_changed = false;
 
     public static function SetRoot(string $root): void
     {
         self::$Root = "/" . str_replace("/", "", $root);
-        self::$Root_changed = true;
+        // self::$Root_changed = true;
     }
     public static function CurrentPage(string $filename): bool
     {
@@ -38,12 +38,12 @@ class AutoRouter extends Router
 {
     private static function Page_Fetching(string $dir_page, string $ext, string $root): void
     {
-        self::$Root_changed ? $file = self::File(str_replace("$root", "", $_SERVER["REQUEST_URI"])) : $file = self::File($_SERVER["REQUEST_URI"]);
+        $file = self::File(str_replace("$root", "", $_SERVER["REQUEST_URI"]));
         $index = self::$Home_Page;
         if (file_exists("./$dir_page/$file$ext")) {
             self::$Return_404 = false;
             require_once "./$dir_page/$file$ext";
-        } else if (file_exists("./$dir_page/$file/$index$ext") && self::$Root_changed) {
+        } else if (file_exists("./$dir_page/$file/$index$ext")) {
             self::$Return_404 = false;
             require_once "./$dir_page/$file/$index$ext";
         }
