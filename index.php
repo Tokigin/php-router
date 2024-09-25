@@ -13,7 +13,7 @@ require_once "./Cannel/Load.php";
     ?>
 </head>
 
-<body>
+<body class="bg-dark text-white">
     <?php
     Page::Index();
     ?>

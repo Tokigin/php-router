@@ -11,7 +11,7 @@ $root = "/php-router";
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item d-flex gap-2">
                     <a class="nav-link text-white" href="<?php echo $root ?>">Home</a>
-                    <a class="nav-link text-white" href="<?php echo $root ?>/about">About</a>
+                    <a class="nav-link text-white" href="<?php echo $root ?>/guide">Guide</a>
                 </li>
             </ul>
 
